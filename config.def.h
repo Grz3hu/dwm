@@ -29,6 +29,7 @@ static const Rule rules[] = {
 	/* class      		instance    title       tags mask     iscentered isfloating   monitor */
 	{ "Gimp",    		NULL,       NULL,       0,            0,		1,           -1 },
 	{ "feh",     		NULL,       NULL,       0,            1,		1,           -1 },
+	{ "st",     		NULL,       NULL,       0,            1,		0,           -1 },
 	{ "Steam",     		NULL,       NULL,       3,            0,		1,           -1 },
 	{ "csgo_linux64", 	NULL,       NULL,       3,            0,		1,           -1 },
 	{ "float",     		NULL,       NULL,       0,            1,		1,           -1 },
