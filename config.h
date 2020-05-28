@@ -8,18 +8,29 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=14" };
 static const char dmenufont[]       = "monospace:size=12";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+/* static const char col_gray1[]       = "#222222"; */
+/* static const char col_gray2[]       = "#444444"; */
+/* static const char col_gray3[]       = "#bbbbbb"; */
+/* static const char col_gray4[]       = "#eeeeee"; */
+/* static const char col_cyan[]        = "#005577"; */
+/* static const char *colors[][3]      = { */
+/* 	/1*               fg         bg         border   *1/ */
+/* 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 }, */
+/* 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  }, */
+static char normbgcolor[]           = "#222222";
+static char normbordercolor[]       = "#444444";
+static char normfgcolor[]           = "#bbbbbb";
+static char selfgcolor[]            = "#eeeeee";
+static char selbordercolor[]        = "#005577";
+static char selbgcolor[]            = "#005577";
+static char *colors[][3] = {
+   	       /*               fg           bg           border   */
+   	   [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+};
+
 static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-};
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
 	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
@@ -70,7 +81,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "Run: ", NULL };
+/* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "Run: ", NULL }; */
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *termfloat[]  = { "st","-c","float", NULL };
 static const char *firefox[]  = { "firefox", NULL };
@@ -83,26 +95,27 @@ static const char *qr[]  = { "qr_wrap", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      	spawn,          {.v = dmenucmd } },
-	{ MODKEY,		        XK_Return, 	spawn,          {.v = termcmd } },
-	{ MODKEY,		        XK_backslash, 	spawn,          {.v = termfloat } },
+	{ MODKEY,		        		XK_Return, 	spawn,          {.v = termcmd } },
+	{ MODKEY,		        	XK_backslash, 	spawn,          {.v = termfloat } },
 	{ MODKEY,                       XK_b,      	spawn,      	{.v = firefox } },
 	{ MODKEY,                       XK_Print,  	spawn,      	{.v = shutter } },
 	{ MODKEY,                       XK_m,      	spawn,      	{.v = neomutt } },
 	{ MODKEY,                       XK_o,      	spawn,      	{.v = gotop } },
 	{ MODKEY,                       XK_c,      	spawn,      	{.v = calc } },
-	{ MODKEY,                       XK_F1,      	spawn,      	{.v = qr } },
-	/* { MODKEY,                       XK_b,   	   togglebar,      {0} }, */
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -5 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +5 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY,                       XK_F1,     	spawn,      	{.v = qr } },
+	{ MODKEY,                       XK_F5,      xrdb,          	{.v = NULL } },
+	{ MODKEY|ShiftMask,             XK_b,  	   	togglebar,      {0} }, 
+	{ MODKEY,                       XK_minus,  	setgaps,        {.i = -5 } },
+	{ MODKEY,                       XK_equal,  	setgaps,        {.i = +5 } },
+	{ MODKEY|ShiftMask,             XK_equal,  	setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_j,      	focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      	focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      	incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_p,      	incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      	setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_t,  		setlayout,      {.v = &layouts[0]} },
-	/*{ MODKEY,                       XK_f,     	setlayout,      {.v = &layouts[1]} }, */
-	/* { MODKEY,                       XK_m,  	   setlayout,      {.v = &layouts[2]} }, */
+	/* { MODKEY,                      XK_f,    	setlayout,      {.v = &layouts[1]} }, */
+	/*{ MODKEY,                       XK_m,		setlayout,      {.v = &layouts[2]} }, */
 	{ MODKEY,                       XK_r,     	setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ShiftMask,             XK_r,     	setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|ShiftMask,             XK_space, 	togglefloating, {0} },
@@ -113,9 +126,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    	view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      	killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_0,      	tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  	focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, 	focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  	tagmon,         {.i = -1 } },
+	{ MODKEY,	                	XK_grave, 	focusmon,       {.i = +1 } },
+	{ MODKEY,    		        	XK_period,	focusmon,       {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_grave,  	tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, 	tagmon,         {.i = +1 } },
 	TAGKEYS(                        XK_1,      	                0)
 	TAGKEYS(                        XK_2,      	                1)
