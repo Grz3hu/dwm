@@ -130,6 +130,14 @@ static Key keys[] = {
 	{ MODKEY,    		        	XK_period,	focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_grave,  	tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, 	tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_j,	   	moveresize,     {.v = "0x 50y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_k,      	moveresize,     {.v = "0x -50y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_l,	   	moveresize,     {.v = "50x 0y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_h,	   	moveresize,     {.v = "-50x 0y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_Down,   	moveresize,     {.v = "0x 0y 0w 50h" } },
+	{ MODKEY|ShiftMask,             XK_Up,     	moveresize,     {.v = "0x 0y 0w -50h" } },
+	{ MODKEY|ShiftMask,             XK_Right,  	moveresize,     {.v = "0x 0y 50w 0h" } },
+	{ MODKEY|ShiftMask,             XK_Left,   	moveresize,     {.v = "0x 0y -50w 0h" } },
 	TAGKEYS(                        XK_1,      	                0)
 	TAGKEYS(                        XK_2,      	                1)
 	TAGKEYS(                        XK_b,      	                1)
