@@ -21,8 +21,8 @@ static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
-static char selbordercolor[]        = "#005577";
-static char selbgcolor[]            = "#005577";
+static char selbordercolor[]        = "#6B8838";
+static char selbgcolor[]            = "#6B8838";
 static char *colors[][3] = {
    	       /*               fg           bg           border   */
    	   [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -130,14 +130,14 @@ static Key keys[] = {
 	{ MODKEY,    		        	XK_period,	focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_grave,  	tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, 	tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_j,	   	moveresize,     {.v = "0x 50y 0w 0h" } },
-	{ MODKEY|ShiftMask,             XK_k,      	moveresize,     {.v = "0x -50y 0w 0h" } },
-	{ MODKEY|ShiftMask,             XK_l,	   	moveresize,     {.v = "50x 0y 0w 0h" } },
-	{ MODKEY|ShiftMask,             XK_h,	   	moveresize,     {.v = "-50x 0y 0w 0h" } },
-	{ MODKEY|ShiftMask,             XK_Down,   	moveresize,     {.v = "0x 0y 0w 50h" } },
-	{ MODKEY|ShiftMask,             XK_Up,     	moveresize,     {.v = "0x 0y 0w -50h" } },
-	{ MODKEY|ShiftMask,             XK_Right,  	moveresize,     {.v = "0x 0y 50w 0h" } },
-	{ MODKEY|ShiftMask,             XK_Left,   	moveresize,     {.v = "0x 0y -50w 0h" } },
+	{ MODKEY|ShiftMask,             XK_j,	   	moveresize,     {.v = "0x 100y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_k,      	moveresize,     {.v = "0x -100y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_l,	   	moveresize,     {.v = "100x 0y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_h,	   	moveresize,     {.v = "-100x 0y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_Down,   	moveresize,     {.v = "0x 0y 0w 100h" } },
+	{ MODKEY|ShiftMask,             XK_Up,     	moveresize,     {.v = "0x 0y 0w -100h" } },
+	{ MODKEY|ShiftMask,             XK_Right,  	moveresize,     {.v = "0x 0y 100w 0h" } },
+	{ MODKEY|ShiftMask,             XK_Left,   	moveresize,     {.v = "0x 0y -100w 0h" } },
 	TAGKEYS(                        XK_1,      	                0)
 	TAGKEYS(                        XK_2,      	                1)
 	TAGKEYS(                        XK_b,      	                1)
