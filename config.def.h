@@ -49,7 +49,7 @@ static const Rule rules[] = {
 	{ "Gimp",    		NULL,       NULL,       0,            0,		1,           -1 },
 	{ "feh",     		NULL,       NULL,       0,            1,		1,           -1 },
 	{ "st",     		NULL,       NULL,       0,            1,		0,           -1 },
-	{ "Steam",     		NULL,       NULL,       3,            0,		1,           -1 },
+	{ "Steam",     		NULL,       NULL,       4,            0,		1,           -1 },
 	{ "csgo_linux64", 	NULL,       NULL,       3,            0,		1,           -1 },
 	{ "float",     		NULL,       NULL,       0,            1,		1,           -1 },
 	{ "Firefox",  		NULL,       NULL,       2,            0,		0,           -1 },
@@ -149,6 +149,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,      	                7)
 	TAGKEYS(                        XK_9,      	                8)
 	{ MODKEY|ShiftMask,             XK_c,      	quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_x,      	quit,           {1} },
 };
 
 /* button definitions */
