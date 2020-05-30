@@ -88,7 +88,7 @@ static const char *termfloat[]  = { "st","-c","float", NULL };
 static const char *firefox[]  = { "firefox", NULL };
 static const char *shutter[]  = { "shutter","-s", NULL };
 static const char *neomutt[]  = { "st","-c","float","-e","neomutt", NULL };
-static const char *gotop[]  = { "st","-c","float","-e","gotop", NULL };
+static const char *ranger[]  = { "st","-c","float","-e","ranger", NULL };
 static const char *calc[]  = { "st","-c","float","-e","calc", NULL };
 static const char *qr[]  = { "qr_wrap", NULL };
 
@@ -100,7 +100,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,      	spawn,      	{.v = firefox } },
 	{ MODKEY,                       XK_Print,  	spawn,      	{.v = shutter } },
 	{ MODKEY,                       XK_m,      	spawn,      	{.v = neomutt } },
-	{ MODKEY,                       XK_o,      	spawn,      	{.v = gotop } },
+	{ MODKEY,                       XK_o,      	spawn,      	{.v = ranger } },
 	{ MODKEY,                       XK_c,      	spawn,      	{.v = calc } },
 	{ MODKEY,                       XK_F1,     	spawn,      	{.v = qr } },
 	{ MODKEY,                       XK_F5,      xrdb,          	{.v = NULL } },
