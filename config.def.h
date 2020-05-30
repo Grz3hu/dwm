@@ -17,12 +17,12 @@ static const char dmenufont[]       = "monospace:size=12";
 /* 	/1*               fg         bg         border   *1/ */
 /* 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 }, */
 /* 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  }, */
-static char normbgcolor[]           = "#222222";
-static char normbordercolor[]       = "#444444";
+static char normbgcolor[]           = "#2e3440";
+static char normbordercolor[]       = "#2e3440";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
-static char selbordercolor[]        = "#6B8838";
-static char selbgcolor[]            = "#6B8838";
+static char selbordercolor[]        = "#5e81ac";
+static char selbgcolor[]            = "#5e81ac";
 static char *colors[][3] = {
    	       /*               fg           bg           border   */
    	   [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
