@@ -72,6 +72,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define FNKEY 0
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -85,12 +86,16 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *termfloat[]  = { "st","-c","float", NULL };
-static const char *firefox[]  = { "firefox", NULL };
+static const char *firefox[]  = { "firefox-bin", NULL };
 static const char *shutter[]  = { "shutter","-s", NULL };
 static const char *neomutt[]  = { "st","-c","float","-e","neomutt", NULL };
 static const char *ranger[]  = { "st","-c","float","-e","ranger", NULL };
 static const char *calc[]  = { "st","-c","float","-e","calc", NULL };
 static const char *qr[]  = { "qr_wrap", NULL };
+static const char *bar[]  = { "bar_update", NULL };
+static const char *volUp[]  = { "amixer","-D","pulse","sset","Master","5%+", NULL };
+static const char *volDown[]  = { "amixer","-D","pulse","sset","Master","5%-", NULL };
+static const char *volMute[]  = { "amixer","set","Master","toggle", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -103,7 +108,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_o,      	spawn,      	{.v = ranger } },
 	{ MODKEY,                       XK_c,      	spawn,      	{.v = calc } },
 	{ MODKEY,                       XK_F1,     	spawn,      	{.v = qr } },
+	{ MODKEY,                       XK_F2,     	spawn,      	{.v = bar } },
 	{ MODKEY,                       XK_F5,      xrdb,          	{.v = NULL } },
+	{ FNKEY,						XF86XK_AudioRaiseVolume,     spawn,			{.v = volUp } },
+	{ FNKEY,						XF86XK_AudioLowerVolume,     spawn,			{.v = volDown } },
+	{ FNKEY,						XF86XK_AudioMute,     		 spawn,			{.v = volMute } },
 	{ MODKEY|ShiftMask,             XK_b,  	   	togglebar,      {0} }, 
 	{ MODKEY,                       XK_minus,  	setgaps,        {.i = -5 } },
 	{ MODKEY,                       XK_equal,  	setgaps,        {.i = +5 } },
