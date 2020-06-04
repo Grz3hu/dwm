@@ -87,6 +87,8 @@ static const char *bar[]  = { "bar_update", NULL };
 static const char *volUp[]  = { "amixer","-D","pulse","sset","Master","5%+", NULL };
 static const char *volDown[]  = { "amixer","-D","pulse","sset","Master","5%-", NULL };
 static const char *volMute[]  = { "amixer","set","Master","toggle", NULL };
+static const char *brightUp[]  = { "light","-A","10", NULL };
+static const char *brightDown[]  = { "light","-U","10", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -104,6 +106,8 @@ static Key keys[] = {
 	{ FNKEY,						XF86XK_AudioRaiseVolume,     spawn,			{.v = volUp } },
 	{ FNKEY,						XF86XK_AudioLowerVolume,     spawn,			{.v = volDown } },
 	{ FNKEY,						XF86XK_AudioMute,     		 spawn,			{.v = volMute } },
+	{ FNKEY,						XF86XK_MonBrightnessUp,		 spawn,			{.v = brightUp } },
+	{ FNKEY,						XF86XK_MonBrightnessDown,	 spawn,			{.v = brightDown } },
 	{ MODKEY|ShiftMask,             XK_b,  	   	togglebar,      {0} }, 
 	{ MODKEY,                       XK_minus,  	setgaps,        {.i = -5 } },
 	{ MODKEY,                       XK_equal,  	setgaps,        {.i = +5 } },
