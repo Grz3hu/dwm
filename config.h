@@ -4,6 +4,7 @@
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const int gappx     = 5;                 /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=14" };
@@ -36,14 +37,17 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance    title       tags mask     iscentered isfloating   monitor */
-	{ "Gimp",    		NULL,       NULL,       0,            0,		1,           -1 },
-	{ "feh",     		NULL,       NULL,       0,            1,		1,           -1 },
-	{ "st",     		NULL,       NULL,       0,            1,		0,           -1 },
-	{ "Steam",     		NULL,       NULL,       4,            0,		1,           -1 },
-	{ "csgo_linux64", 	NULL,       NULL,       0,            0,		1,           -1 },
-	{ "float",     		NULL,       NULL,       0,            1,		1,           -1 },
-	{ "Firefox",  		NULL,       NULL,       2,            0,		0,           -1 },
+
+/* layout(s) */
+	/* class      		instance    title       tags mask     iscentered 	isfloating   isterminal		noswallow	monitor */
+	{ "Gimp",    		NULL,       NULL,       0,            0,			1,           0, 			0,			-1 },
+	{ "feh",     		NULL,       NULL,       0,            1,			0,           0, 			0,			-1 },
+	{ "st",     		NULL,       NULL,       0,            1,			0,           1, 			-1,			-1 },
+	{ "Steam",     		NULL,       NULL,       4,            0,			1,           0, 			0,			-1 },
+	{ "csgo_linux64", 	NULL,       NULL,       0,            0,			1,           0, 			0,			-1 },
+	{ "float",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
+	{ "Firefox",  		NULL,       NULL,       2,            0,			0,           0, 			-1,			-1 },
+	{ NULL,      		NULL,   "Event Tester", 0,         	  0,			1, 	         0,           	1,	        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -74,7 +78,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "Run: ", NULL }; */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor,NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, "-p", "Run: ", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *termfloat[]  = { "st","-c","float", NULL };
 static const char *firefox[]  = { "firefox-bin", NULL };
@@ -82,6 +86,7 @@ static const char *shutter[]  = { "shutter","-s", NULL };
 static const char *neomutt[]  = { "st","-c","float","-e","neomutt", NULL };
 static const char *ranger[]  = { "st","-c","float","-e","ranger", NULL };
 static const char *calc[]  = { "st","-c","float","-e","calc", NULL };
+static const char *htop[]  = { "st","-c","float","-e","htop", NULL };
 static const char *qr[]  = { "qr_wrap", NULL };
 static const char *bar[]  = { "bar_update", NULL };
 static const char *volUp[]  = { "amixer","-D","pulse","sset","Master","5%+", NULL };
@@ -99,6 +104,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Print,  	spawn,      	{.v = shutter } },
 	{ MODKEY,                       XK_m,      	spawn,      	{.v = neomutt } },
 	{ MODKEY,                       XK_o,      	spawn,      	{.v = ranger } },
+	{ MODKEY,                       XK_p,      	spawn,      	{.v = htop } },
 	{ MODKEY,                       XK_c,      	spawn,      	{.v = calc } },
 	{ MODKEY,                       XK_F1,     	spawn,      	{.v = qr } },
 	{ MODKEY,                       XK_F2,     	spawn,      	{.v = bar } },
