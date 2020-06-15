@@ -5,6 +5,8 @@ include config.mk
 
 SRC = drw.c dwm.c util.c
 OBJ = ${SRC:.c=.o}
+USE_XORG+= xinerama
+OPTIONS=	XINERAMA ON
 
 all: options dwm
 
