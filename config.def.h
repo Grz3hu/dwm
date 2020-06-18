@@ -1,3 +1,4 @@
+#include <X11/XF86keysym.h>
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
@@ -7,8 +8,8 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=14" };
-static const char dmenufont[]       = "monospace:size=12";
+static const char *fonts[]          = { "monospace:size=15" };
+static const char dmenufont[]       = "monospace:size=15";
 static char normbgcolor[]           = "#2e3440";
 static char normbordercolor[]       = "#2e3440";
 static char normfgcolor[]           = "#bbbbbb";
@@ -43,7 +44,7 @@ static const Rule rules[] = {
 	{ "Gimp",    		NULL,       NULL,       0,            0,			1,           0, 			0,			-1 },
 	{ "feh",     		NULL,       NULL,       0,            1,			0,           0, 			0,			-1 },
 	{ "st",     		NULL,       NULL,       0,            1,			0,           1, 			-1,			-1 },
-	{ "Steam",     		NULL,       NULL,       4,            0,			1,           0, 			0,			-1 },
+	{ "Steam",     		NULL,       NULL,       4,            0,			0,           0, 			0,			-1 },
 	{ "csgo_linux64", 	NULL,       NULL,       0,            0,			1,           0, 			0,			-1 },
 	{ "float",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
 	{ "Firefox",  		NULL,  "Firefox",       2,            0,			0,           0, 			-1,			-1 },
@@ -82,6 +83,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *termfloat[]  = { "st","-c","float", NULL };
 static const char *firefox[]  = { "firefox-bin", NULL };
+static const char *emacs[]  = { "emacs", NULL };
 static const char *shutter[]  = { "shutter","-s", NULL };
 static const char *neomutt[]  = { "st","-c","float","-e","neomuttwrap", NULL };
 static const char *ranger[]  = { "st","-c","float","-e","ranger", NULL };
@@ -92,6 +94,7 @@ static const char *bar[]  = { "bar_update", NULL };
 static const char *volUp[]  = { "amixer","-D","pulse","sset","Master","5%+", NULL };
 static const char *volDown[]  = { "amixer","-D","pulse","sset","Master","5%-", NULL };
 static const char *volMute[]  = { "amixer","set","Master","toggle", NULL };
+static const char *micMute[]  = { "amixer","set","Capture","toggle", NULL };
 static const char *brightUp[]  = { "light","-A","10", NULL };
 static const char *brightDown[]  = { "light","-U","10", NULL };
 
@@ -101,6 +104,7 @@ static Key keys[] = {
 	{ MODKEY,		        		XK_Return, 	spawn,          {.v = termcmd } },
 	{ MODKEY,		        	XK_backslash, 	spawn,          {.v = termfloat } },
 	{ MODKEY,                       XK_b,      	spawn,      	{.v = firefox } },
+	{ MODKEY,                       XK_e,      	spawn,      	{.v = emacs } },
 	{ MODKEY,                       XK_Print,  	spawn,      	{.v = shutter } },
 	{ MODKEY,                       XK_m,      	spawn,      	{.v = neomutt } },
 	{ MODKEY,                       XK_o,      	spawn,      	{.v = ranger } },
@@ -112,6 +116,7 @@ static Key keys[] = {
 	{ FNKEY,						XF86XK_AudioRaiseVolume,     spawn,			{.v = volUp } },
 	{ FNKEY,						XF86XK_AudioLowerVolume,     spawn,			{.v = volDown } },
 	{ FNKEY,						XF86XK_AudioMute,     		 spawn,			{.v = volMute } },
+	{ FNKEY,						XF86XK_AudioMicMute,     	 spawn,			{.v = micMute } },
 	{ FNKEY,						XF86XK_MonBrightnessUp,		 spawn,			{.v = brightUp } },
 	{ FNKEY,						XF86XK_MonBrightnessDown,	 spawn,			{.v = brightDown } },
 	{ MODKEY|ShiftMask,             XK_b,  	   	togglebar,      {0} }, 
