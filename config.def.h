@@ -2,13 +2,18 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const int gappx     = 5;                 /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=15" };
+static const int horizpadbar        = 6;        /* horizontal padding for statusbar */
+static const int vertpadbar         = 7;        /* vertical padding for statusbar */
+/* static const char *fonts[]          = { "monospace:size=15" }; */
+static const char *fonts[]            = { "monospace:size=14", 
+										"Mononoki Nerd Font:size=12:antialias=true:autohint=true"
+										};
 static const char dmenufont[]       = "monospace:size=15";
 static char normbgcolor[]           = "#2e3440";
 static char normbordercolor[]       = "#2e3440";
@@ -31,7 +36,8 @@ static const unsigned int alphas[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+/* static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }; */
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -132,7 +138,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_h,      	setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_t,  		setlayout,      {.v = &layouts[0]} },
-	/* { MODKEY,                      XK_f,    	setlayout,      {.v = &layouts[1]} }, */
+/* { MODKEY,                      XK_f,    	setlayout,      {.v = &layouts[1]} }, */
 	/*{ MODKEY,                       XK_m,		setlayout,      {.v = &layouts[2]} }, */
 	{ MODKEY,                       XK_r,     	setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|ShiftMask,             XK_r,     	setlayout,      {.v = &layouts[4]} },
@@ -167,7 +173,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,      	                7)
 	TAGKEYS(                        XK_9,      	                8)
 	{ MODKEY|ShiftMask,             XK_c,      	quit,           {0} },
-	{ MODKEY|ShiftMask,             XK_x,      	quit,           {1} },
+	{ MODKEY|ShiftMask,             XK_x,      	quit,           {1} }, //restart
 };
 
 /* button definitions */
@@ -176,7 +182,6 @@ static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
