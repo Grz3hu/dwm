@@ -77,7 +77,7 @@ static const Layout layouts[] = {
 #define MODKEY Mod4Mask
 #define FNKEY 0
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	{ MODKEY,                       KEY,      comboview,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -150,9 +150,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    	view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      	killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_0,      	tag,            {.ui = ~0 } },
-	/* { MODKEY,	                	XK_grave, 	focusmon,       {.i = +1 } }, */
+	{ MODKEY,	                	XK_grave, 	focusmon,       {.i = +1 } },
 	/* { MODKEY,    		        	XK_period,	focusmon,       {.i = -1 } }, */
-	/* { MODKEY|ShiftMask,             XK_grave,  	tagmon,         {.i = -1 } }, */
+	{ MODKEY|ShiftMask,             XK_grave,  	tagmon,         {.i = -1 } },
 	/* { MODKEY|ShiftMask,             XK_period, 	tagmon,         {.i = +1 } }, */
 	{ MODKEY|ShiftMask,             XK_j,	   	moveresize,     {.v = "0x 100y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_k,      	moveresize,     {.v = "0x -100y 0w 0h" } },
