@@ -50,9 +50,11 @@ static const Rule rules[] = {
 	{ "Gimp",    		NULL,       NULL,       0,            0,			1,           0, 			0,			-1 },
 	{ "feh",     		NULL,       NULL,       0,            1,			0,           0, 			0,			-1 },
 	{ "st",     		NULL,       NULL,       0,            1,			0,           1, 			-1,			-1 },
+	{ "scratchpad",		NULL,       NULL,       0,            0,			1,           1, 			-1,			-1 },
 	{ "Steam",     		NULL,       NULL,       4,            0,			0,           0, 			0,			-1 },
 	{ "csgo_linux64", 	NULL,       NULL,       0,            0,			1,           0, 			0,			-1 },
 	{ "float",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
+	{ "dragon",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
 	{ "Firefox",  		NULL,  "Firefox",       2,            0,			0,           0, 			-1,			-1 },
 	{ NULL,      		NULL,   "Event Tester", 0,         	  0,			1, 	         0,           	1,	        -1 }, /* xev */
 };
@@ -65,11 +67,12 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 #include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
- 	{ "[\\]",     dwindle },
- 	{ "[@]",      spiral },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
-	{ "[]=",      tile },    /* first entry is default */
+ 	{ "[ 侀 ]",     dwindle },
+ 	{ "[ 侀² ]",      spiral },
+	{ "[  ]",      NULL },    /* no layout function means floating behavior */
+	{ "[  ]",      monocle },
+	{ "[ ﱢ ]",      tile },    /* first entry is default */
+	{ "[ 冀 ]",      centeredmaster },
 	{ NULL,       NULL },
 };
 
@@ -88,6 +91,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "Run: ", NULL }; */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, "-p", "Run: ", NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x28", NULL };
 static const char *termfloat[]  = { "st","-c","float", NULL };
 static const char *firefox[]  = { "firefox", NULL };
 static const char *emacs[]  = { "emacs", NULL };
@@ -119,6 +124,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_c,      	spawn,      	{.v = clipmenu } },
 	{ MODKEY,                       XK_F1,     	spawn,      	{.v = qr } },
 	{ MODKEY,                       XK_F2,     	spawn,      	{.v = bar } },
+	{ MODKEY,                       XK_s,	    togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_F5,      xrdb,          	{.v = NULL } },
 	{ FNKEY,						XF86XK_AudioRaiseVolume,     spawn,			{.v = volUp } },
 	{ FNKEY,						XF86XK_AudioLowerVolume,     spawn,			{.v = volDown } },
@@ -158,10 +164,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_k,      	moveresize,     {.v = "0x -100y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_l,	   	moveresize,     {.v = "100x 0y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_h,	   	moveresize,     {.v = "-100x 0y 0w 0h" } },
-	{ MODKEY|ShiftMask,             XK_Down,   	moveresize,     {.v = "0x 0y 0w 100h" } },
-	{ MODKEY|ShiftMask,             XK_Up,     	moveresize,     {.v = "0x 0y 0w -100h" } },
-	{ MODKEY|ShiftMask,             XK_Right,  	moveresize,     {.v = "0x 0y 100w 0h" } },
-	{ MODKEY|ShiftMask,             XK_Left,   	moveresize,     {.v = "0x 0y -100w 0h" } },
+	{ MODKEY,		                XK_Down,   	moveresize,     {.v = "0x 0y 0w 100h" } },
+	{ MODKEY,		                XK_Up,     	moveresize,     {.v = "0x 0y 0w -100h" } },
+	{ MODKEY,		                XK_Right,  	moveresize,     {.v = "0x 0y 100w 0h" } },
+	{ MODKEY,		                XK_Left,   	moveresize,     {.v = "0x 0y -100w 0h" } },
 	TAGKEYS(                        XK_1,      	                0)
 	TAGKEYS(                        XK_2,      	                1)
 	TAGKEYS(                        XK_b,      	                1)
