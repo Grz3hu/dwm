@@ -10,9 +10,8 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 8;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 7;        /* vertical padding for statusbar */
-/* static const char *fonts[]          = { "monospace:size=15" }; */
-static const char *fonts[]            = { "mononoki-Regular Nerd Font Complete:size=14", 
-										"Mononoki Nerd Font:size=14:antialias=true:autohint=true"
+static const char *fonts[]            = { "mononoki-Regular Nerd Font Complete:size=16", 
+					"Mononoki Nerd Font:size=16:antialias=true:autohint=true"
 										};
 static const char dmenufont[]       = "monospace:size=15";
 static char normbgcolor[]           = "#2e3440";
@@ -23,11 +22,11 @@ static char selbordercolor[]        = "#5e81ac";
 static char selbgcolor[]            = "#5e81ac";
 static char *colors[][3] = {
    	       /*               fg           bg           border   */
-   	   [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
-static const unsigned int baralpha = 0xd0;
+static const unsigned int baralpha = 229;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
@@ -37,7 +36,7 @@ static const unsigned int alphas[][3]      = {
 
 /* tagging */
 /* static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }; */
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", ""}; //, "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -51,12 +50,12 @@ static const Rule rules[] = {
 	{ "feh",     		NULL,       NULL,       0,            1,			0,           0, 			0,			-1 },
 	{ "st",     		NULL,       NULL,       0,            1,			0,           1, 			-1,			-1 },
 	{ "scratchpad",		NULL,       NULL,       0,            0,			1,           1, 			-1,			-1 },
-	{ "Steam",     		NULL,       NULL,       4,            0,			0,           0, 			0,			-1 },
-	{ "csgo_linux64", 	NULL,       NULL,       0,            0,			1,           0, 			0,			-1 },
+	{ "Steam",     		NULL,    "Steam",       4,            0,			0,           0, 			-1,			 0 },
+	{ "csgo_linux64", 	NULL,       NULL,       5,            0,			1,           0, 			0,			 0 },
 	{ "float",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
-	{ "dragon",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
-	{ "Firefox",  		NULL,  "Firefox",       2,            0,			0,           0, 			-1,			-1 },
-	{ NULL,      		NULL,   "Event Tester", 0,         	  0,			1, 	         0,           	1,	        -1 }, /* xev */
+	{ "Dragon",     	NULL,       NULL,       0,            1,			1,           0, 			-1,			-1 },
+	{ "Firefox",  		NULL,   "Firefox",      2,            0,			0,           0, 			-1,			-1 },
+	{ NULL,      		NULL,   "Event Tester", 0,            0,			1, 	     0,           		1,	        	-1 }, /* xev */
 };
 
 /* layout(s) */
@@ -90,7 +89,9 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "Run: ", NULL }; */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, "-p", "Run: ", NULL };
+static const char *roficmd[]  = { "rofi", "-show", "drun", NULL };
 static const char *termcmd[]  = { "st", NULL };
+/* static const char *termcmd[]  = { "st", "-e", "tmux", NULL }; */
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x28", NULL };
 static const char *termfloat[]  = { "st","-c","float", NULL };
@@ -112,7 +113,7 @@ static const char *brightDown[]  = { "light","-U","10", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_d,      	spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_d,      	spawn,          {.v = roficmd } },
 	{ MODKEY,		        		XK_Return, 	spawn,          {.v = termcmd } },
 	{ MODKEY,		        	XK_backslash, 	spawn,          {.v = termfloat } },
 	{ MODKEY,                       XK_b,      	spawn,      	{.v = firefox } },
@@ -178,7 +179,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,      	                6)
 	TAGKEYS(                        XK_8,      	                7)
 	TAGKEYS(                        XK_9,      	                8)
-	{ MODKEY|ShiftMask,             XK_c,      	quit,           {0} },
+	/* { MODKEY|ShiftMask,             XK_c,      	quit,           {0} }, */
 	{ MODKEY|ShiftMask,             XK_x,      	quit,           {1} }, //restart
 };
 
