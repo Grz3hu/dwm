@@ -111,11 +111,12 @@ static const char *micMute[]  = { "amixer","set","Capture","toggle", NULL };
 static const char *brightUp[]  = { "light","-A","10", NULL };
 static const char *brightDown[]  = { "light","-U","10", NULL };
 
+#include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      	spawn,          {.v = roficmd } },
-	{ MODKEY,		        		XK_Return, 	spawn,          {.v = termcmd } },
-	{ MODKEY,		        	XK_backslash, 	spawn,          {.v = termfloat } },
+	{ MODKEY,		       	XK_Return, 	spawn,          {.v = termcmd } },
+	{ MODKEY,		       	XK_backslash, 	spawn,          {.v = termfloat } },
 	{ MODKEY,                       XK_b,      	spawn,      	{.v = firefox } },
 	{ MODKEY,                       XK_e,      	spawn,      	{.v = emacs } },
 	{ MODKEY,                       XK_Print,  	spawn,      	{.v = shutter } },
@@ -127,22 +128,24 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F2,     	spawn,      	{.v = bar } },
 	{ MODKEY,                       XK_s,	    togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_F5,      xrdb,          	{.v = NULL } },
-	{ FNKEY,						XF86XK_AudioRaiseVolume,     spawn,			{.v = volUp } },
-	{ FNKEY,						XF86XK_AudioLowerVolume,     spawn,			{.v = volDown } },
-	{ FNKEY,						XF86XK_AudioMute,     		 spawn,			{.v = volMute } },
-	{ FNKEY,						XF86XK_AudioMicMute,     	 spawn,			{.v = micMute } },
-	{ FNKEY,						XF86XK_MonBrightnessUp,		 spawn,			{.v = brightUp } },
-	{ FNKEY,						XF86XK_MonBrightnessDown,	 spawn,			{.v = brightDown } },
+	{ FNKEY,			XF86XK_AudioRaiseVolume,     spawn,			{.v = volUp } },
+	{ FNKEY,			XF86XK_AudioLowerVolume,     spawn,			{.v = volDown } },
+	{ FNKEY,			XF86XK_AudioMute,     		 spawn,			{.v = volMute } },
+	{ FNKEY,			XF86XK_AudioMicMute,     	 spawn,			{.v = micMute } },
+	{ FNKEY,			XF86XK_MonBrightnessUp,		 spawn,			{.v = brightUp } },
+	{ FNKEY,			XF86XK_MonBrightnessDown,	 spawn,			{.v = brightDown } },
 	{ MODKEY|ShiftMask,             XK_b,  	   	togglebar,      {0} }, 
 	{ MODKEY,                       XK_minus,  	setgaps,        {.i = -5 } },
 	{ MODKEY,                       XK_equal,  	setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_equal,  	setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_k,      	focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_j,      	focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      	incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_p,      	incnmaster,     {.i = -1 } },
-	{ MODKEY,						XK_comma,  cyclelayout,    {.i = -1 } },
-	{ MODKEY,           			XK_period, cyclelayout,    {.i = +1 } },
+	/* { MODKEY,                       XK_i,      	incnmaster,     {.i = +1 } }, */
+	/* { MODKEY,                       XK_p,      	incnmaster,     {.i = -1 } }, */
+	{ MODKEY,			XK_comma,  	cyclelayout,    {.i = -1 } },
+	{ MODKEY,           		XK_period, 	cyclelayout,    {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma,       movestack,      {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period,      movestack,      {.i = +1 } },
 	{ MODKEY,                       XK_h,      	setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_t,  		setlayout,      {.v = &layouts[0]} },
     /* { MODKEY,                       XK_f,    	setlayout,      {.v = &layouts[1]} }, */
@@ -157,18 +160,18 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    	view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      	killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_0,      	tag,            {.ui = ~0 } },
-	{ MODKEY,	                	XK_grave, 	focusmon,       {.i = +1 } },
-	/* { MODKEY,    		        	XK_period,	focusmon,       {.i = -1 } }, */
+	{ MODKEY,	               	XK_grave, 	focusmon,       {.i = +1 } },
+	/* { MODKEY,             	XK_period,	focusmon,       {.i = -1 } }, */
 	{ MODKEY|ShiftMask,             XK_grave,  	tagmon,         {.i = -1 } },
 	/* { MODKEY|ShiftMask,             XK_period, 	tagmon,         {.i = +1 } }, */
 	{ MODKEY|ShiftMask,             XK_j,	   	moveresize,     {.v = "0x 100y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_k,      	moveresize,     {.v = "0x -100y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_l,	   	moveresize,     {.v = "100x 0y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_h,	   	moveresize,     {.v = "-100x 0y 0w 0h" } },
-	{ MODKEY,		                XK_Down,   	moveresize,     {.v = "0x 0y 0w 100h" } },
-	{ MODKEY,		                XK_Up,     	moveresize,     {.v = "0x 0y 0w -100h" } },
-	{ MODKEY,		                XK_Right,  	moveresize,     {.v = "0x 0y 100w 0h" } },
-	{ MODKEY,		                XK_Left,   	moveresize,     {.v = "0x 0y -100w 0h" } },
+	{ MODKEY,		        XK_Down,   	moveresize,     {.v = "0x 0y 0w 100h" } },
+	{ MODKEY,		        XK_Up,     	moveresize,     {.v = "0x 0y 0w -100h" } },
+	{ MODKEY,		        XK_Right,  	moveresize,     {.v = "0x 0y 100w 0h" } },
+	{ MODKEY,		        XK_Left,   	moveresize,     {.v = "0x 0y -100w 0h" } },
 	TAGKEYS(                        XK_1,      	                0)
 	TAGKEYS(                        XK_2,      	                1)
 	TAGKEYS(                        XK_b,      	                1)
