@@ -23,7 +23,7 @@ static char selbgcolor[]            = "#5e81ac";
 static char *colors[][3] = {
    	       /*               fg           bg           border   */
 	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-        [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+	[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
 static const unsigned int baralpha = 229;
@@ -110,6 +110,7 @@ static const char *volMute[]  = { "amixer","set","Master","toggle", NULL };
 static const char *micMute[]  = { "amixer","set","Capture","toggle", NULL };
 static const char *brightUp[]  = { "light","-A","10", NULL };
 static const char *brightDown[]  = { "light","-U","10", NULL };
+static const char *xrandr[]  = { "xrandr","--output","DP-1.1","--auto","--right-of","eDP-1-1", NULL };
 
 #include "movestack.c"
 static Key keys[] = {
@@ -123,6 +124,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      	spawn,      	{.v = neomutt } },
 	{ MODKEY,                       XK_o,      	spawn,      	{.v = ranger } },
 	{ MODKEY,                       XK_p,      	spawn,      	{.v = htop } },
+	{ MODKEY,                       XK_x,      	spawn,      	{.v = xrandr } },
 	{ MODKEY,                       XK_c,      	spawn,      	{.v = clipmenu } },
 	{ MODKEY,                       XK_F1,     	spawn,      	{.v = qr } },
 	{ MODKEY,                       XK_F2,     	spawn,      	{.v = bar } },
@@ -142,10 +144,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_j,      	focusstack,     {.i = -1 } },
 	/* { MODKEY,                       XK_i,      	incnmaster,     {.i = +1 } }, */
 	/* { MODKEY,                       XK_p,      	incnmaster,     {.i = -1 } }, */
-	{ MODKEY,			XK_comma,  	cyclelayout,    {.i = -1 } },
-	{ MODKEY,           		XK_period, 	cyclelayout,    {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,       movestack,      {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period,      movestack,      {.i = +1 } },
+	{ MODKEY,			XK_period,  	cyclelayout,    {.i = -1 } },
+	{ MODKEY,           		XK_comma, 	cyclelayout,    {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_period,       movestack,      {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_comma,      movestack,      {.i = +1 } },
 	{ MODKEY,                       XK_h,      	setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_t,  		setlayout,      {.v = &layouts[0]} },
     /* { MODKEY,                       XK_f,    	setlayout,      {.v = &layouts[1]} }, */
