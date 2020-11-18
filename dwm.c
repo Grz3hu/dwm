@@ -407,6 +407,7 @@ applyrules(Client *c)
 
 	/* rule matching */
 	c->noswallow = -1;
+	c->iscentered = 0;
 	c->isfloating = 0;
 	c->tags = 0;
 	XGetClassHint(dpy, c->win, &ch);
@@ -1435,9 +1436,9 @@ manage(Window w, XWindowAttributes *wa)
 		c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
 	}
 
-	if(c->iscentered) {
-		c->x = (c->mon->mw - WIDTH(c)) / 2;
-		c->y = (c->mon->mh - HEIGHT(c)) / 2;
+	if (c->iscentered) {
+		c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+		c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
 	}
 
 	wc.border_width = c->bw;
@@ -2650,8 +2651,10 @@ updatewindowtype(Client *c)
 
 	if (state == netatom[NetWMFullscreen])
 		setfullscreen(c, 1);
-	if (wtype == netatom[NetWMWindowTypeDialog])
+	if (wtype == netatom[NetWMWindowTypeDialog]){
+		c->iscentered = 1;
 		c->isfloating = 1;
+	}
 }
 
 void
