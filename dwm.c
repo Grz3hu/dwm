@@ -82,7 +82,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeAct }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetDesktopNames, NetDesktopViewport, NetNumberOfDesktops, NetCurrentDesktop, NetLast }; /* EWMH atoms */
@@ -1069,11 +1069,13 @@ drawbar(Monitor *m)
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 		if (occ & 1 << i)
-			drw_rect(drw, x + boxs, boxs, boxw, boxw,
-				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-				urg & 1 << i);
+		{
+			drw_setscheme(drw, scheme[SchemeAct]);
+			if(m->tagset[m->seltags] & 1 << i)
+				drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeAct]);
+			}
+		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 		x += w;
 	}
 	w = blw = TEXTW(m->ltsymbol);
@@ -1384,6 +1386,9 @@ loadxrdb()
 								XRDB_LOAD_COLOR("dwm.selbordercolor", selbordercolor);
 								XRDB_LOAD_COLOR("dwm.selbgcolor", selbgcolor);
 								XRDB_LOAD_COLOR("dwm.selfgcolor", selfgcolor);
+								XRDB_LOAD_COLOR("dwm.actfgcolor", actfgcolor);
+								XRDB_LOAD_COLOR("dwm.actbordercolor", actbordercolor);
+								XRDB_LOAD_COLOR("dwm.actbgcolor", actbgcolor);
 						}
 				}
 		}

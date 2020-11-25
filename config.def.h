@@ -20,10 +20,14 @@ static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#5e81ac";
 static char selbgcolor[]            = "#5e81ac";
+static char actbgcolor[]           = "#2e3440";
+static char actbordercolor[]       = "#2e3440";
+static char actfgcolor[]           = "#bbbbbb";
 static char *colors[][3] = {
    	       /*               fg           bg           border   */
 	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
 	[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+	[SchemeAct]  = { actfgcolor,  normbgcolor, normbordercolor },
 };
 
 static const unsigned int baralpha = 229;
@@ -32,6 +36,7 @@ static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
 	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeAct]  = { OPAQUE, baralpha, borderalpha },
 };
 
 /* tagging */
@@ -93,13 +98,12 @@ static const char *roficmd[]  = { "rofi", "-show", "drun", NULL };
 static const char *termcmd[]  = { "st", NULL };
 /* static const char *termcmd[]  = { "st", "-e", "tmux", NULL }; */
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x28", NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x28","-e","tmuxscratchpad.sh" ,NULL };
 static const char *termfloat[]  = { "st","-c","float", NULL };
 static const char *firefox[]  = { "firefox", NULL };
 static const char *emacs[]  = { "emacs", NULL };
 static const char *shutter[]  = { "shutter","-s", NULL };
 static const char *neomutt[]  = { "st","-c","float","-e","neomuttwrap", NULL };
-static const char *ranger[]  = { "st","-c","float","-e","ranger", NULL };
 static const char *clipmenu[]  = { "clipmenu", NULL };
 static const char *htop[]  = { "st","-c","float","-e","htop", NULL };
 static const char *qr[]  = { "qr_wrap", NULL };
@@ -122,7 +126,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_e,      	spawn,      	{.v = emacs } },
 	{ MODKEY,                       XK_Print,  	spawn,      	{.v = shutter } },
 	{ MODKEY,                       XK_m,      	spawn,      	{.v = neomutt } },
-	{ MODKEY,                       XK_o,      	spawn,      	{.v = ranger } },
 	{ MODKEY,                       XK_p,      	spawn,      	{.v = htop } },
 	{ MODKEY,                       XK_x,      	spawn,      	{.v = xrandr } },
 	{ MODKEY,                       XK_c,      	spawn,      	{.v = clipmenu } },
