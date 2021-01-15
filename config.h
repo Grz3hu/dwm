@@ -58,8 +58,9 @@ static const Rule rules[] = {
 	{ "Steam",     		NULL,    "Steam",       4,            0,			0,           0, 			-1,			 0 },
 	{ "csgo_linux64", 	NULL,       NULL,       5,            0,			1,           0, 			0,			 0 },
 	{ "float",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
-	{ "Dragon",     	NULL,       NULL,       0,            1,			1,           0, 			-1,			-1 },
+	{ "Dragon",     	NULL,       NULL,      ~0,            1,			1,           0, 			-1,			-1 },
 	{ "Firefox",  		NULL,   "Firefox",      2,            0,			0,           0, 			-1,			-1 },
+	{ "Brave",  		NULL,   "Brave",      	2,            0,			0,           0, 			-1,			-1 },
 	{ NULL,      		NULL,   "Event Tester", 0,            0,			1, 	     0,           		1,	        	-1 }, /* xev */
 };
 
@@ -98,22 +99,24 @@ static const char *roficmd[]  = { "rofi", "-show", "drun", NULL };
 static const char *termcmd[]  = { "st", NULL };
 /* static const char *termcmd[]  = { "st", "-e", "tmux", NULL }; */
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x28","-e","tmuxscratchpad.sh" ,NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "140x45","-e","tmuxscratchpad.sh" ,NULL };
 static const char *termfloat[]  = { "st","-c","float", NULL };
-static const char *firefox[]  = { "firefox", NULL };
+static const char *browser[]  = { "brave-bin", NULL };
 static const char *emacs[]  = { "emacs", NULL };
 static const char *shutter[]  = { "shutter","-s", NULL };
-static const char *neomutt[]  = { "st","-c","float","-e","neomuttwrap", NULL };
+static const char *neomutt[]  = { "st","-g", "140x45","-c","float","-e","neomuttwrap", NULL };
 static const char *clipmenu[]  = { "clipmenu", NULL };
 static const char *htop[]  = { "st","-c","float","-e","htop", NULL };
 static const char *qr[]  = { "qr_wrap", NULL };
 static const char *bar[]  = { "bar_update", NULL };
-static const char *volUp[]  = { "amixer","-D","pulse","sset","Master","5%+", NULL };
-static const char *volDown[]  = { "amixer","-D","pulse","sset","Master","5%-", NULL };
-static const char *volMute[]  = { "amixer","set","Master","toggle", NULL };
+static const char *volUp[]  = { "pulsemixer","--change-volume","+5","--max-volume","125",NULL };
+static const char *volDown[]  = { "pulsemixer","--change-volume","-5","--max-volume","125",NULL };
+static const char *volMute[]  = { "pulsemixer","--toggle-mute", NULL };
+static const char *volUpdate[]  = { "pkill","-RTMIN+10","gocaudices", NULL };
 static const char *micMute[]  = { "amixer","set","Capture","toggle", NULL };
 static const char *brightUp[]  = { "light","-A","10", NULL };
 static const char *brightDown[]  = { "light","-U","10", NULL };
+static const char *brightUpdate[]  = { "pkill","-RTMIN+11","gocaudices", NULL };
 static const char *xrandr[]  = { "xrandr","--output","DP-1.1","--auto","--right-of","eDP-1-1", NULL };
 
 #include "movestack.c"
@@ -122,7 +125,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      	spawn,          {.v = roficmd } },
 	{ MODKEY,		       	XK_Return, 	spawn,          {.v = termcmd } },
 	{ MODKEY,		       	XK_backslash, 	spawn,          {.v = termfloat } },
-	{ MODKEY,                       XK_b,      	spawn,      	{.v = firefox } },
+	{ MODKEY,                       XK_b,      	spawn,      	{.v = browser } },
 	{ MODKEY,                       XK_e,      	spawn,      	{.v = emacs } },
 	{ MODKEY,                       XK_Print,  	spawn,      	{.v = shutter } },
 	{ MODKEY,                       XK_m,      	spawn,      	{.v = neomutt } },
@@ -136,9 +139,14 @@ static Key keys[] = {
 	{ FNKEY,			XF86XK_AudioRaiseVolume,     spawn,			{.v = volUp } },
 	{ FNKEY,			XF86XK_AudioLowerVolume,     spawn,			{.v = volDown } },
 	{ FNKEY,			XF86XK_AudioMute,     		 spawn,			{.v = volMute } },
+	{ FNKEY,			XF86XK_AudioRaiseVolume,     spawn,			{.v = volUpdate } },
+	{ FNKEY,			XF86XK_AudioLowerVolume,     spawn,			{.v = volUpdate } },
+	{ FNKEY,			XF86XK_AudioMute,     		 spawn,			{.v = volUpdate } },
 	{ FNKEY,			XF86XK_AudioMicMute,     	 spawn,			{.v = micMute } },
 	{ FNKEY,			XF86XK_MonBrightnessUp,		 spawn,			{.v = brightUp } },
 	{ FNKEY,			XF86XK_MonBrightnessDown,	 spawn,			{.v = brightDown } },
+	{ FNKEY,			XF86XK_MonBrightnessUp,		 spawn,			{.v = brightUpdate } },
+	{ FNKEY,			XF86XK_MonBrightnessDown,	 spawn,			{.v = brightUpdate } },
 	{ MODKEY|ShiftMask,             XK_b,  	   	togglebar,      {0} }, 
 	{ MODKEY,                       XK_minus,  	setgaps,        {.i = -5 } },
 	{ MODKEY,                       XK_equal,  	setgaps,        {.i = +5 } },

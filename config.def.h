@@ -58,8 +58,9 @@ static const Rule rules[] = {
 	{ "Steam",     		NULL,    "Steam",       4,            0,			0,           0, 			-1,			 0 },
 	{ "csgo_linux64", 	NULL,       NULL,       5,            0,			1,           0, 			0,			 0 },
 	{ "float",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
-	{ "Dragon",     	NULL,       NULL,       0,            1,			1,           0, 			-1,			-1 },
+	{ "Dragon",     	NULL,       NULL,      ~0,            1,			1,           0, 			-1,			-1 },
 	{ "Firefox",  		NULL,   "Firefox",      2,            0,			0,           0, 			-1,			-1 },
+	{ "Brave",  		NULL,   "Brave",      	2,            0,			0,           0, 			-1,			-1 },
 	{ NULL,      		NULL,   "Event Tester", 0,            0,			1, 	     0,           		1,	        	-1 }, /* xev */
 };
 
@@ -108,9 +109,9 @@ static const char *clipmenu[]  = { "clipmenu", NULL };
 static const char *htop[]  = { "st","-c","float","-e","htop", NULL };
 static const char *qr[]  = { "qr_wrap", NULL };
 static const char *bar[]  = { "bar_update", NULL };
-static const char *volUp[]  = { "amixer","-D","pulse","sset","Master","5%+", NULL };
-static const char *volDown[]  = { "amixer","-D","pulse","sset","Master","5%-", NULL };
-static const char *volMute[]  = { "amixer","set","Master","toggle", NULL };
+static const char *volUp[]  = { "pulsemixer","--change-volume","+5","--max-volume","125",NULL };
+static const char *volDown[]  = { "pulsemixer","--change-volume","-5","--max-volume","125",NULL };
+static const char *volMute[]  = { "pulsemixer","--toggle-mute", NULL };
 static const char *volUpdate[]  = { "pkill","-RTMIN+10","gocaudices", NULL };
 static const char *micMute[]  = { "amixer","set","Capture","toggle", NULL };
 static const char *brightUp[]  = { "light","-A","10", NULL };
