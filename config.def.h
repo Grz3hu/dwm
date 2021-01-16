@@ -161,10 +161,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,      movestack,      {.i = +1 } },
 	{ MODKEY,                       XK_h,      	setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_t,  		setlayout,      {.v = &layouts[0]} },
-    /* { MODKEY,                       XK_f,    	setlayout,      {.v = &layouts[1]} }, */
-	/* { MODKEY,                       XK_m,		setlayout,      {.v = &layouts[2]} }, */
-	/* { MODKEY,                       XK_r,     	setlayout,      {.v = &layouts[3]} }, */
-	/* { MODKEY|ShiftMask,             XK_r,     	setlayout,      {.v = &layouts[4]} }, */
 	{ MODKEY|ShiftMask,             XK_space, 	togglefloating, {0} },
 	{ MODKEY,                       XK_f,     	togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,     	view,           {.ui = ~0 } },
@@ -173,10 +169,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    	view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      	killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_0,      	tag,            {.ui = ~0 } },
-	{ MODKEY,	               	XK_grave, 	focusmon,       {.i = +1 } },
-	/* { MODKEY,             	XK_period,	focusmon,       {.i = -1 } }, */
+	{ MODKEY,	               	XK_grave, 	focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_grave,  	tagmon,         {.i = -1 } },
-	/* { MODKEY|ShiftMask,             XK_period, 	tagmon,         {.i = +1 } }, */
+	{ MODKEY|ShiftMask,             XK_grave,  	focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,	   	moveresize,     {.v = "0x 100y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_k,      	moveresize,     {.v = "0x -100y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_l,	   	moveresize,     {.v = "100x 0y 0w 0h" } },
