@@ -51,7 +51,7 @@ static const Rule rules[] = {
 
 /* layout(s) */
 	/* class      		instance    title       tags mask     iscentered 	isfloating   isterminal		noswallow	monitor */
-	{ "Gimp",    		NULL,       NULL,       0,            0,			1,           0, 			0,			-1 },
+	{ "Gimp",    		NULL,       NULL,       0,            0,			0,           0, 			0,			-1 },
 	{ "feh",     		NULL,       NULL,       0,            1,			0,           0, 			0,			-1 },
 	{ "st",     		NULL,       NULL,       0,            1,			0,           1, 			-1,			-1 },
 	{ "scratchpad",		NULL,       NULL,       0,            0,			1,           1, 			-1,			-1 },
@@ -83,12 +83,13 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define MODKEY2 Mod5Mask
 #define FNKEY 0
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY|MODKEY2,           	KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, /* helper for spawning shell commands in the pre dwm-5.0 fashion */
+	{ MODKEY|MODKEY2|ShiftMask, 	KEY,      toggletag,      {.ui = 1 << TAG} }, /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
