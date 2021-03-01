@@ -51,14 +51,14 @@ static const Rule rules[] = {
 
 /* layout(s) */
 	/* class      		instance    title       tags mask     iscentered 	isfloating   isterminal		noswallow	monitor */
-	{ "Gimp",    		NULL,       NULL,       0,            0,			1,           0, 			0,			-1 },
+	{ "Gimp",    		NULL,       NULL,       0,            0,			0,           0, 			0,			-1 },
 	{ "feh",     		NULL,       NULL,       0,            1,			0,           0, 			0,			-1 },
 	{ "st",     		NULL,       NULL,       0,            1,			0,           1, 			-1,			-1 },
 	{ "scratchpad",		NULL,       NULL,       0,            0,			1,           1, 			-1,			-1 },
 	{ "Steam",     		NULL,    "Steam",       4,            0,			0,           0, 			-1,			 0 },
 	{ "csgo_linux64", 	NULL,       NULL,       5,            0,			1,           0, 			0,			 0 },
 	{ "float",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
-	{ "Dragon",     	NULL,       NULL,      ~0,            1,			1,           0, 			-1,			-1 },
+	{ "Dragon",     	NULL,       NULL,      ~0,            1,			1,           0, 			1,			-1 },
 	{ "Firefox",  		NULL,   "Firefox",      2,            0,			0,           0, 			-1,			-1 },
 	{ "Brave",  		NULL,   "Brave",      	2,            0,			0,           0, 			-1,			-1 },
 	{ NULL,      		NULL,   "Event Tester", 0,            0,			1, 	     0,           		1,	        	-1 }, /* xev */
@@ -83,12 +83,13 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define MODKEY2 Mod5Mask
 #define FNKEY 0
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      comboview,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	{ MODKEY|MODKEY2,           	KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, /* helper for spawning shell commands in the pre dwm-5.0 fashion */
+	{ MODKEY|MODKEY2|ShiftMask, 	KEY,      toggletag,      {.ui = 1 << TAG} }, /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
@@ -118,6 +119,7 @@ static const char *brightUp[]  = { "light","-A","10", NULL };
 static const char *brightDown[]  = { "light","-U","10", NULL };
 static const char *brightUpdate[]  = { "pkill","-RTMIN+11","gocaudices", NULL };
 static const char *xrandr[]  = { "xrandr","--output","DP-1.1","--auto","--right-of","eDP-1-1", NULL };
+static const char *fehbg[]  = { "/home/grzes/.fehbg",NULL };
 
 #include "movestack.c"
 static Key keys[] = {
@@ -131,6 +133,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      	spawn,      	{.v = neomutt } },
 	{ MODKEY,                       XK_p,      	spawn,      	{.v = htop } },
 	{ MODKEY,                       XK_x,      	spawn,      	{.v = xrandr } },
+	{ MODKEY,                       XK_x,      	spawn,      	{.v = fehbg } },
 	{ MODKEY,                       XK_c,      	spawn,      	{.v = clipmenu } },
 	{ MODKEY,                       XK_F1,     	spawn,      	{.v = qr } },
 	{ MODKEY,                       XK_F2,     	spawn,      	{.v = bar } },
@@ -161,10 +164,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,      movestack,      {.i = +1 } },
 	{ MODKEY,                       XK_h,      	setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_t,  		setlayout,      {.v = &layouts[0]} },
-    /* { MODKEY,                       XK_f,    	setlayout,      {.v = &layouts[1]} }, */
-	/* { MODKEY,                       XK_m,		setlayout,      {.v = &layouts[2]} }, */
-	/* { MODKEY,                       XK_r,     	setlayout,      {.v = &layouts[3]} }, */
-	/* { MODKEY|ShiftMask,             XK_r,     	setlayout,      {.v = &layouts[4]} }, */
 	{ MODKEY|ShiftMask,             XK_space, 	togglefloating, {0} },
 	{ MODKEY,                       XK_f,     	togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,     	view,           {.ui = ~0 } },
@@ -173,10 +172,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    	view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      	killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_0,      	tag,            {.ui = ~0 } },
-	{ MODKEY,	               	XK_grave, 	focusmon,       {.i = +1 } },
-	/* { MODKEY,             	XK_period,	focusmon,       {.i = -1 } }, */
+	{ MODKEY,	               	XK_grave, 	focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_grave,  	tagmon,         {.i = -1 } },
-	/* { MODKEY|ShiftMask,             XK_period, 	tagmon,         {.i = +1 } }, */
+	{ MODKEY|ShiftMask,             XK_grave,  	focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,	   	moveresize,     {.v = "0x 100y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_k,      	moveresize,     {.v = "0x -100y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_l,	   	moveresize,     {.v = "100x 0y 0w 0h" } },
