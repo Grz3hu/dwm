@@ -116,7 +116,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
 	int bw, oldbw;
 	unsigned int tags;
-	int isfixed, iscentered, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow;
+	int isfixed, iscentered, isfloating, wasfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow;
 	pid_t pid;
 	Client *next;
 	Client *snext;
@@ -2243,13 +2243,40 @@ Layout *last_layout;
 void
 togglefullscr(const Arg *arg)
 {
+	Client *c;
 	if (selmon->showbar) {
 		for(last_layout = (Layout *)layouts; last_layout != selmon->lt[selmon->sellt]; last_layout++);
 		setlayout(&((Arg) { .v = &layouts[1] }));
 		resizehints = 0;
+
+		for (c = selmon->clients; c; c = c->next) {
+			if(c->isfloating)
+			{
+				c->sfx = c->x;
+				c->sfy = c->y;
+				c->sfw = c->w;
+				c->sfh = c->h;
+				c->wasfloating=1;
+				c->isfloating=0;
+			}
+		}
+
 	} else {
 		setlayout(&((Arg) { .v = last_layout }));
 		resizehints = 1;
+
+		for (c = selmon->clients; c; c = c->next) {
+			if(c->wasfloating)
+			{
+				resize(c, c->sfx, c->sfy,
+				       c->sfw, c->sfh, False);
+				c->wasfloating=0;
+				c->isfloating=1;
+				configure(c);
+ 				XSync(dpy, False);
+			}
+		}
+
 	}
 	togglebar(arg);
 }
@@ -2485,7 +2512,7 @@ updategeom(void)
 				for (m = mons; m && m->next; m = m->next);
 				if (m)
 					m->next = createmon();
-				else
+						else
 					mons = createmon();
 			}
 			for (i = 0, m = mons; i < nn && m; m = m->next, i++)

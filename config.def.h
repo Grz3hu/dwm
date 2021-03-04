@@ -164,7 +164,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period,       movestack,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_comma,      movestack,      {.i = +1 } },
 	{ MODKEY,                       XK_h,      	setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_t,  		setlayout,      {.v = &layouts[0]} },
 	{ MODKEY|ShiftMask,             XK_space, 	togglefloating, {0} },
 	{ MODKEY,                       XK_f,     	togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,     	view,           {.ui = ~0 } },
