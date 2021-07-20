@@ -53,6 +53,7 @@ static const Rule rules[] = {
 	/* class      		instance    title       tags mask     iscentered 	isfloating   isterminal		noswallow	monitor */
 	{ "Gimp",    		NULL,       NULL,       0,            0,			0,           0, 			0,			-1 },
 	{ "feh",     		NULL,       NULL,       0,            1,			0,           0, 			0,			-1 },
+	{ "TorLauncher", 	NULL,       NULL,       0,            1,			0,           0, 			0,			-1 },
 	{ "st",     		NULL,       NULL,       0,            1,			0,           1, 			-1,			-1 },
 	{ "St",     		NULL,       NULL,       0,            1,			0,           1, 			-1,			-1 },
 	{ "scratchpad",		NULL,       NULL,       0,            0,			1,           1, 			-1,			-1 },
@@ -60,7 +61,6 @@ static const Rule rules[] = {
 	{ "csgo_linux64", 	NULL,       NULL,       5,            0,			1,           0, 			0,			 0 },
 	{ "float",     		NULL,       NULL,       0,            1,			1,           0, 			0,			-1 },
 	{ "Dragon",     	NULL,       NULL,      ~0,            1,			1,           0, 			1,			-1 },
-	{ "Firefox",  		NULL,   "Firefox",      2,            0,			0,           0, 			-1,			-1 },
 	{ "Brave",  		NULL,   "Brave",      	2,            0,			0,           0, 			-1,			-1 },
 	{ NULL,      		NULL,   "Event Tester", 0,            0,			1, 	     0,           		1,	        	-1 }, /* xev */
 };
@@ -96,7 +96,8 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, "-p", "Run: ", NULL }; */
-static const char *dmenucmd[] = { "dmenu_run", "-p", "Run: ", NULL };
+/* static const char *dmenucmd[] = { "dmenu_run", "-p", "Run: ", NULL }; */
+static const char *dmenucmd[] = { "dmenu_run", "-p", "Run: ",topbar ? NULL : "-b", NULL };
 /* static const char *roficmd[]  = { "rofi", "-show", "drun", NULL }; */
 static const char *termcmd[]  = { "st", NULL };
 /* static const char *termcmd[]  = { "st", "-e", "tmux", NULL }; */
@@ -123,7 +124,7 @@ static const char *mpcPrev[]  = { "mpc","prev", NULL };
 static const char *mpcStop[]  = { "mpc","stop", NULL };
 static const char *mpcUpdate[]  = { "pkill","-RTMIN+11","gocaudices", NULL };
 static const char *mpcToggle[]  = { "mpc","toggle", NULL };
-static const char *xrandr[]  = { "xrandr","--output","DP-1.3","--auto","--right-of","eDP-1-1", NULL };
+static const char *xrandr[]  = { "xrandr_wrap",NULL };
 static const char *fehbg[]  = { "/home/grzes/.fehbg",NULL };
 
 #include "movestack.c"
@@ -204,7 +205,7 @@ static Key keys[] = {
 	{ MODKEY,		        XK_Right,  			 moveresize,     	{.v = "0x 0y 100w 0h" } },
 	{ MODKEY,		        XK_Left,   			 moveresize,     	{.v = "0x 0y -100w 0h" } },
 
-	{ MODKEY,                       XK_b,    			 view,           	{1} },
+	TAGKEYS(                        XK_b,    			            	 	1)
 	TAGKEYS(                        XK_1,      			                 	0)
 	TAGKEYS(                        XK_2,      			                 	1)
 	TAGKEYS(                        XK_3,      			                 	2)
