@@ -22,3 +22,9 @@ jobs:
       
     - name: Compile
       run: make
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with: 
+        name: dwm-binary
+        path: dwm
