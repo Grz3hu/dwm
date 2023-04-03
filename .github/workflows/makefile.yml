@@ -28,3 +28,8 @@ jobs:
       with: 
         name: dwm-binary
         path: dwm
+    
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dwm
