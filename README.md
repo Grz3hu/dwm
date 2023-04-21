@@ -1,3 +1,4 @@
+![example workflow](https://github.com/Grz3hu/dwm/actions/workflows/makefile.yml/badge.svg)
 My build of dwm
 Patches applied:
 
