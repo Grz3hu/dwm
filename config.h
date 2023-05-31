@@ -14,8 +14,8 @@ static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows sel
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray             = 1;   /* 0 means no systray */
-static const char *fonts[]            = { "mononoki-Regular Nerd Font Complete:size=16", 
-					"Mononoki Nerd Font:size=16:antialias=true:autohint=true"
+static const char *fonts[]            = { "mononoki-Regular Nerd Font Complete:size=14", 
+					"Mononoki Nerd Font:size=14:antialias=true:autohint=true"
 										};
 static const char dmenufont[]       = "monospace:size=15";
 static char normbgcolor[]           = "#2e3440";
@@ -98,52 +98,55 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, "-p", "Run: ", NULL }; */
 /* static const char *dmenucmd[] = { "dmenu_run", "-p", "Run: ", NULL }; */
-static const char *dmenucmd[] = { "dmenu_run", "-p", "Run: ",topbar ? NULL : "-b", NULL };
 /* static const char *roficmd[]  = { "rofi", "-show", "drun", NULL }; */
-static const char *termcmd[]  = { "st", NULL };
 /* static const char *termcmd[]  = { "st", "-e", "tmux", NULL }; */
-static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "140x45","-e","tmuxscratchpad.sh" ,NULL };
-static const char *termfloat[]  = { "st","-c","float", NULL };
-static const char *browser[]  = { "brave-bin", NULL };
-static const char *neomutt[]  = { "st","-g", "140x45","-c","float","-e","neomuttwrap", NULL };
-static const char *clipmenu[]  = { "clipmenu", NULL };
-static const char *htop[]  = { "st","-c","float","-e","htop", NULL };
-static const char *qr[]  = { "qr_wrap", NULL };
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *bar[]  = { "bar_update", NULL };
-static const char *volUp[]  = { "pulsemixer","--change-volume","+5","--max-volume","125",NULL };
-static const char *volDown[]  = { "pulsemixer","--change-volume","-5","--max-volume","125",NULL };
-static const char *volMute[]  = { "pulsemixer","--toggle-mute", NULL };
-static const char *volUpdate[]  = { "pkill","-RTMIN+10","gocaudices", NULL };
-static const char *volNoti[]  = { "noti_volume", NULL };
-static const char *micMute[]  = { "amixer","set","Capture","toggle", NULL };
-static const char *brightUp[]  = { "light","-A","10", NULL };
 static const char *brightDown[]  = { "light","-U","10", NULL };
 static const char *brightNoti[]  = { "noti_backlight", NULL };
+static const char *brightUp[]  = { "light","-A","10", NULL };
+static const char *browser[]  = { "firefox", NULL };
+static const char *clipmenu[]  = { "clipmenu", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-p", "Run: ",topbar ? NULL : "-b", NULL };
+static const char *fehbg[]  = { "/home/grzes/.fehbg",NULL };
+static const char *htop[]  = { "st","-c","float","-e","htop", NULL };
+static const char *micMute[]  = { "amixer","set","Capture","toggle", NULL };
 static const char *mpcNext[]  = { "mpc","next", NULL };
 static const char *mpcPrev[]  = { "mpc","prev", NULL };
 static const char *mpcStop[]  = { "mpc","stop", NULL };
-static const char *mpcUpdate[]  = { "pkill","-RTMIN+11","gocaudices", NULL };
 static const char *mpcToggle[]  = { "mpc","toggle", NULL };
+static const char *mpcUpdate[]  = { "pkill","-RTMIN+11","gocaudices", NULL };
+static const char *neomutt[]  = { "st","-g", "140x45","-c","float","-e","neomuttwrap", NULL };
+static const char *qr[]  = { "qr_wrap", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termfloat[]  = { "alacritty","--class","float", NULL };
+static const char *volDown[]  = { "pulsemixer","--change-volume","-5","--max-volume","125",NULL };
+static const char *volMute[]  = { "pulsemixer","--toggle-mute", NULL };
+static const char *volNoti[]  = { "noti_volume", NULL };
+static const char *volUp[]  = { "pulsemixer","--change-volume","+5","--max-volume","125",NULL };
+static const char *volUpdate[]  = { "pkill","-RTMIN+10","gocaudices", NULL };
 static const char *xrandr[]  = { "xrandr_wrap",NULL };
-static const char *fehbg[]  = { "/home/grzes/.fehbg",NULL };
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "140x45","-e","tmuxscratchpad.sh" ,NULL };
 
 #include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      			 spawn,         	{.v = dmenucmd } },
+	{ MODKEY|ShiftMask,		XK_a,      			 spawn,         	SHCMD("togglemode.sh") },
 	{ MODKEY,		       	XK_Return, 			 spawn,         	{.v = termcmd } },
 	{ MODKEY,		       	XK_backslash, 			 spawn,         	{.v = termfloat } },
+	{ MODKEY,		       	XK_BackSpace, 			 spawn,         	{.v = termfloat } },
 	{ MODKEY,                       XK_b,      			 spawn,      		{.v = browser } },
-	{ MODKEY,                       XK_Print,  			 spawn,      		SHCMD("scrot_wrap") },
+	{ MODKEY|ShiftMask,		XK_s,	  			 spawn,      		SHCMD("scrot_wrap") },
 	{ MODKEY,                       XK_m,      			 spawn,      		{.v = neomutt } },
 	{ MODKEY,                       XK_p,      			 spawn,      		{.v = htop } },
 	{ MODKEY,                       XK_x,      			 spawn,      		{.v = xrandr } },
 	{ MODKEY,                       XK_x,      			 spawn,      		{.v = fehbg } },
 	{ MODKEY,                       XK_c,      			 spawn,      		{.v = clipmenu } },
+	{ MODKEY,                       XK_r,      			 spawn,      		SHCMD("change_output_sink.py") },
 	{ MODKEY,                       XK_F1,     			 spawn,      		{.v = qr } },
 	{ MODKEY,                       XK_F2,     			 spawn,      		{.v = bar } },
 
@@ -185,14 +188,15 @@ static Key keys[] = {
 
 	{ MODKEY,			XK_period,  			 cyclelayout,    	{.i = -1 } },
 	{ MODKEY,           		XK_comma, 			 cyclelayout,    	{.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_period,      		 movestack,      	{.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,       		 movestack,      	{.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_j,      		 	 movestack,      	{.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,       		 	 movestack,      	{.i = -1 } },
 	{ MODKEY,                       XK_h,      			 setmfact,       	{.f = -0.05} },
 	{ MODKEY|ShiftMask,             XK_space, 			 togglefloating, 	{0} },
 	{ MODKEY,                       XK_f,     			 togglefullscr,  	{0} },
 	{ MODKEY,                       XK_0,     			 view,           	{.ui = ~0 } },
 	{ MODKEY,                       XK_l,      			 setmfact,       	{.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_backslash,   		 zoom,           	{0} },
+	{ MODKEY|ShiftMask,             XK_BackSpace,   		 zoom,           	{0} },
 	{ MODKEY,                       XK_Tab,    			 view,           	{0} },
 	{ MODKEY|ShiftMask,             XK_q,      			 killclient,     	{0} },
 	{ MODKEY|ShiftMask,             XK_0,      			 tag,            	{.ui = ~0 } },
