@@ -140,7 +140,7 @@ static Key keys[] = {
 	{ MODKEY,		       	XK_backslash, 			 spawn,         	{.v = termfloat } },
 	{ MODKEY,		       	XK_BackSpace, 			 spawn,         	{.v = termfloat } },
 	{ MODKEY,                       XK_b,      			 spawn,      		{.v = browser } },
-	{ MODKEY|ShiftMask,		XK_s,	  			 spawn,      		SHCMD("scrot_wrap") },
+	{ MODKEY|ShiftMask,		XK_s,	  			 spawn,      		SHCMD("scrot_wrap.sh") },
 	{ MODKEY,                       XK_m,      			 spawn,      		{.v = neomutt } },
 	{ MODKEY,                       XK_p,      			 spawn,      		{.v = htop } },
 	{ MODKEY,                       XK_x,      			 spawn,      		{.v = xrandr } },
