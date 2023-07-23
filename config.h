@@ -77,12 +77,12 @@ static int resizehints = 1;    /* 1 means respect size hints in tiled resizals *
 #include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
- 	{ "[ 侀 ]",     dwindle },
- 	/* { "[ 侀² ]",      spiral }, */
+ 	{ "[ 󰕴 ]",     dwindle },
+ 	/* { "[ ² ]",      spiral }, */
 	/* { "[  ]",      NULL },    /1* no layout function means floating behavior *1/ */
 	{ "[  ]",      monocle },
-	{ "[ ﬿ ]",      tile },    /* first entry is default */
-	{ "[ 冀 ]",      centeredmaster },
+	{ "[ 󰙀 ]",      tile },    /* first entry is default */
+	{ "[ 󰕶 ]",      centeredmaster },
 	{ NULL,       NULL },
 };
 
